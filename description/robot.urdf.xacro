@@ -4,4 +4,6 @@
     <!--this will be just the robot core components (excluding sensors and such)-->
     <xacro:include filename="robot_core.xacro"/>
 
+    <xacro:include filename="gazebo_control.xacro"/>
+
 </robot>
