@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="robot_material.xacro"/>
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <!-- My root link, being the footprint-->
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size=".2 .24 .003"/>
+            </geometry>
+            <origin xyz="0 0 0.0015" rpy="0 0 0" />
+            <material name="gray" />
+        <collision>
+            <geometry>
+                <box size=".2 .24 .003"/>
+            </geometry>
+            <origin xyz="0 0 0.0015" rpy="0 0 0" />
+        </collision>
+        </visual>
+        <xacro:inertial_box mass=".09" x=".2" y=".24" z=".003">
+            <origin xyz="0 0 0.0015" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <link name="left_wheel_link">
+        <visual>
+            <geometry>
+                    <cylinder radius=".033" length="0.0254"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
+                <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius=".033" length="0.0254"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="-${pi/2} 0 0"/>
+        </collision>
+        <xacro:inertial_cylinder mass=".0105" length=".0254" radius=".033">
+            <origin xyz="0 0 0 " rpy="-${pi/2} 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <link name="right_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius=".033" length="0.0254"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="-${pi/2} 0 0" />
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius=".033" length="0.0254"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="-${pi/2} 0 0"/>
+        </collision>
+                <xacro:inertial_cylinder mass=".0105" length=".0254" radius=".033">
+            <origin xyz="0 0 0 " rpy="-${pi/2} 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <link name="caster_wheel_link">
+        <visual>
+            <geometry>
+                <sphere radius=".02375"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius=".02375"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="0.034"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx=".00000767125" ixy="0" ixz="0" iyy=".00000767125" iyz="0" izz=".00000767125"/>
+        </inertial>
+        <xacro:inertial_sphere mass=".034" radius=".02375">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
+    </link>
+
+    <!-- original base joint -->
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 .0475" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel_link"/>
+        <origin xyz="0.06825 0.14143125 -.0145" rpy="0 0 0"/>
+        <axis xyz="0 1 0" />
+        <limit effort="30" velocity="10"/> <!--this will likely change, see urdf page. Effort could be set to estimated stall torque-->
+    </joint>
+
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel_link"/>
+        <origin xyz="0.06825 -0.14143125 -.0145" rpy="0 0 0"/>
+        <axis xyz="0 1 0" />
+        <limit effort="30" velocity="10"/> <!--this will likely change, see urdf page. Effort could be set to estimated stall torque-->
+    </joint>
+
+    <joint name="base_caster_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="caster_wheel_link"/>
+        <origin xyz="-0.0730125 0 -.02375" rpy="0 0 0"/>
+    </joint>
+
+</robot>
