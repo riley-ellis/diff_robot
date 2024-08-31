@@ -1,0 +1,13 @@
+teleop_twist_joy:
+  ros__parameters:
+    joy_config: "ps4"
+    axis_linear:
+      x: 1  # Axis for linear velocity (left stick up/down)
+    axis_angular:
+      yaw: 0  # Axis for angular velocity (left stick left/right)
+    scale_linear:
+      x: 1.0  # Scale for linear velocity
+    scale_angular:
+      yaw: 1.0  # Scale for angular velocity
+    enable_button: 5  # Button to enable teleop (R1)
+

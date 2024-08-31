@@ -13,13 +13,13 @@
             </geometry>
             <origin xyz="0 0 0.0015" rpy="0 0 0" />
             <material name="gray" />
+        </visual>
         <collision>
             <geometry>
                 <box size=".2 .24 .003"/>
             </geometry>
             <origin xyz="0 0 0.0015" rpy="0 0 0" />
         </collision>
-        </visual>
         <xacro:inertial_box mass=".09" x=".2" y=".24" z=".003">
             <origin xyz="0 0 0.0015" rpy="0 0 0"/>
         </xacro:inertial_box>
