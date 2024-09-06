@@ -4,6 +4,12 @@
     <!--this will be just the robot core components (excluding sensors and such)-->
     <xacro:include filename="robot_core.xacro"/>
 
-    <xacro:include filename="gazebo_control.xacro"/>
+    <!-- <xacro:include filename="gazebo_control.xacro"/> -->
+
+    <xacro:include filename="ros2_control.xacro" />
+    
+    <!--now add another for the lidar sensor-->
+    <xacro:include filename="lidar.xacro"/>
+
 
 </robot>

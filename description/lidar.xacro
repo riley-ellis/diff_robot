@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="inertial_macros.xacro"/>
+ 
+    <joint name="lidar_joint" type="fixed">
+        <parent link="chassis_link"/>
+        <child link="lidar_frame"/>
+        <origin xyz="0 0 0.0157" rpy="0 0 0"/>
+    </joint>
+
+    <link name="lidar_frame">
+        <visual>
+            <geometry>
+                <cylinder radius=".033" length="0.0254"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius=".033" length="0.0254"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+        <xacro:inertial_cylinder mass=".1" length=".0254" radius=".033">
+            <origin xyz="0 0 0 " rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <gazebo reference="lidar_frame">
+        <material>Gazebo/Red</material>
+
+        <sensor name="laser" type="ray">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <min_angle>-3.14</min_angle>
+                        <max_angle>3.14</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.3</min>
+                    <max>12</max>
+                </range>
+            </ray>
+            <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+                <ros>
+                    <argument>~/output:=/my_robot/laser/scan</argument>
+                </ros>
+                <output_type>sensor_msgs/LaserScan</output_type>
+                <frame_name>lidar_frame</frame_name>
+            </plugin>
+            
+            
+        </sensor>
+    </gazebo>
+
+</robot>
